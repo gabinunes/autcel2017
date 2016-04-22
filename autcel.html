@@ -1,6 +1,11 @@
 <!DOCTYPE html>
+
+
 <html>
 <head>
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
 	<meta charset="utf-8" />
 	<link rel="stylesheet" href="autcel.css"/>
 
@@ -8,22 +13,103 @@
 
 </head>
 <body>
+
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Início</a>
+    </div>
+
+  
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#">Sobre <span class="sr-only">(current)</span></a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Configurações <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="#">Tamanho da Célula</a></li>
+            <li><a href="#">Altura da Matriz</a></li>
+            <li><a href="#">Largura da Matriz</a></li>
+          </ul>
+        </li>
+      </ul>
+      
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#">Contato</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+
 	<h1>
 	Autômato Celular
 	</h1>
     <canvas id="ac:principal">
         Seu navegador não suporta Canvas.
     </canvas>
+
     <br>
-    <button id="reiniciar" onclick="canvas.reiniciar()">Reiniciar</button>
-    <button id="aleatorio" onclick="canvas.aleatorio()">Aleatório</button>
-    <button id="simular" onclick="canvas.simular()"> Simular</button>
-    <button id="proxima" onclick="canvas.proximaGeracao()">Próxima Geração</button>
-    <button id="parar" onclick="canvas.pararSimulacao()">Parar</button>
-	<div id="geracao"></div>
-	<h6> <a href="http://www.instagram.com/ow_bibi">Follow me!</a></h6>
+
 	
+	<button id="aleatorio" onclick="canvas.aleatorio()" type="button" class="btn btn-default" aria-label="Left Align" data-toggle="tooltip" data-placement="top" title="Aleatório" aria-hidden="true" >
+ 		<span class="glyphicon glyphicon-random" ></span>
+	</button>
+
+	<button id="simular" onclick="canvas.simular()" type="button" class="btn btn-default" aria-label="Left Align" data-toggle="tooltip" data-placement="top" title="Simular" aria-hidden="true" >
+ 		<span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+	</button>
+
+	<button id="parar" onclick="canvas.pararSimulacao()" type="button" class="btn btn-default" aria-label="Left Align"data-toggle="tooltip" data-placement="top" title="Pausar" aria-hidden="true" >
+ 		<span class="glyphicon glyphicon-pause" aria-hidden="true"></span>
+	</button>
+
+
+	<button id="proxima" onclick="canvas.mostrarProxGeracao()" type="button" class="btn btn-default" aria-label="Left Align"data-toggle="tooltip" data-placement="top" title="Próxima Geração" aria-hidden="true" >
+ 		<span class="glyphicon glyphicon-step-forward" aria-hidden="true"></span>
+	</button>
+
+	<button id="reiniciar" onclick="canvas.reiniciar()" type="button" class="btn btn-default" aria-label="Left Align"data-toggle="tooltip" data-placement="top" title="Reiniciar" aria-hidden="true" >
+ 		<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+	</button>
+
+	<button id="salvar estado" onclick="" type="button" class="btn btn-default" aria-label="Left Align">
+ 		<span class="glyphicon glyphicon-floppy-open" aria-hidden="true"></span>
+	</button>
+
+	<button id="carregar estado" onclick="" type="button" class="btn btn-default" aria-label="Left Align">
+ 		<span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+	</button>
+
+	<br><br>
+
+	<button type="button" class="btn btn-default btn-lg">
+		<span class="glyphicon glyphicon-tree-deciduous" aria-hidden="true"></span><span id="geracao"></span>
+	</button>
+
+	<br><br><br><hr>
+
+	<a href="http://www.facebook.com/gabiinuness"target="blank"> <i class="fa fa-facebook-square  fa-2x" aria-hidden="true" ></i> </a>
+	<a href="http://www.instagram.com/ow_bibi"target="blank"><i class="fa fa-instagram fa-2x" aria-hidden="true" ></i> </a>
+	<a href=""><i class="fa fa-github fa-2x" aria-hidden="true" ></i> </a>
+
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
 <script type="text/javascript" src="autcel.js"> </script>	
+
 </body>
 </html>
+
 

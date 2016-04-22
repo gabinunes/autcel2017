@@ -1,3 +1,4 @@
+
 // CONSTANTES
 MORTA = 0
 VIVA = 1
@@ -5,13 +6,11 @@ RANDOM = 2;
 
 // CONFIGURAÇÃO
 TAMANHO_DA_CELULA = 10;
-COR_DA_LINHA = "grey";
+COR_DA_LINHA = "black";
 COR_DA_CELULA = "black";
 ESPERA_ENTRE_GERACOES = 100;
 CONSIDERAR_EXTREMIDADES = true;
 
-
-//console.log("alguma coisa");
 
 function Celula(x, y, estado) {
     var posicaoX = x;
@@ -45,11 +44,11 @@ function Celula(x, y, estado) {
 
 function Canvas(canvasId) {
     var canvas = document.getElementById(canvasId);
-    canvas.onClick = function(evt) {
+    canvas.onclick = function(evt) {
         onClick(evt)
     };
-    canvas.width = 370;
-    canvas.height = 200;
+    canvas.width = 500;
+    canvas.height = 280;
     var contexto = canvas.getContext("2d");
     var geracoes = {};
     var geracao = 0;
@@ -98,7 +97,8 @@ function Canvas(canvasId) {
         desenharCelula(celula);
     }
 
-    this.proximaGeracao = function() {
+    this.calcProximaGeracao = function() {
+
         var novaGeracao = [];
         for (var posicaoX = 0; posicaoX < largura; posicaoX++) {
             novaGeracao[posicaoX] = [];
@@ -111,7 +111,14 @@ function Canvas(canvasId) {
         //TODO salvar geraÃ§Ã£o atual
         document.getElementById("geracao").innerHTML = ++geracao;
         celulas = novaGeracao
+
     }
+
+	this.mostrarProxGeracao = function(){
+		this.pararSimulacao();
+		this.calcProximaGeracao();
+	}
+
 
     var processarRegras = function(celula) {
         //TODO Inserir Regras 
@@ -149,7 +156,7 @@ function Canvas(canvasId) {
         self = this;
         clearInterval(intervalId);
         intervalId = setInterval(function() {
-            self.proximaGeracao();
+            self.calcProximaGeracao();
         }, ESPERA_ENTRE_GERACOES);
 
     }
@@ -173,4 +180,6 @@ function Canvas(canvasId) {
 
 canvas = new Canvas("ac:principal")
 canvas.inicializar(MORTA);
+
+
 
