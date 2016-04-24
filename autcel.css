@@ -28,14 +28,21 @@ background-color: white;
 color: black;
 }
 
-hr {
+#hr1 {
+background:gray;
+border:0px; 
+width:60%; 
+height:3px; 
+text-align:center;
+}
+
+#hr2 {
 background:gray;
 border:0px; 
 width:80%; 
 height:3px; 
 text-align:center;
 }
-
 
 /*
 /*div {
