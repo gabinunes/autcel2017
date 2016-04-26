@@ -14,7 +14,7 @@
 </head>
 <body>
 
-<nav class="navbar navbar-default">
+<nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -32,14 +32,34 @@
         <li class="active"><a href="#">Sobre <span class="sr-only">(current)</span></a></li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Configurações <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="#">Tamanho da Célula</a></li>
-            <li><a href="#">Altura da Matriz</a></li>
-            <li><a href="#">Largura da Matriz</a></li>
+
+
+		<ul class="dropdown-menu" aria-labelledby="dropdownMenu3">
+			<li class="dropdown-header">Tamanho da Célula</li>
+				<li><a href="#" onclick="canvas.setTamanhoDaCelula(10)">Pequeno</a></li>
+			    <li><a href="#" onclick="canvas.setTamanhoDaCelula(20)">Médio</a></li>
+			    <li><a href="#" onclick="canvas.setTamanhoDaCelula(40)">Grande</a></li>
+			    <li role="separator" class="divider"></li>
+			<li class="dropdown-header">Tamanho da Matriz</li>
+				<li><a href="#" onclick="canvas.setTamanhoMatriz(200,400)">Pequeno</a></li>
+			    <li><a href="#" onclick="canvas.setTamanhoMatriz(400,800)">Médio</a></li>
+			    <li><a href="#" onclick="canvas.setTamanhoMatriz(600,1200)">Grande</a></li>
+			    <li role="separator" class="divider"></li>
+			<li class="dropdown-header">Considerar bordas</li>
+				<li><a href="#" onclick="canvas.considerarExtremidades(true)">Sim</a></li>
+			    <li><a href="#" onclick="canvas.considerarExtremidades(false)">Não</a></li>
+				<li role="separator" class="divider"></li>
+			<li class="dropdown-header">Velocidade de Execução</li>
+				<li><a href="#" onclick="canvas.setVelocidade(800)">Lenta</a></li>
+			    <li><a href="#" onclick="canvas.setVelocidade(400)">Moderada</a></li>
+			    <li><a href="#" onclick="canvas.setVelocidade(100)">Rápida</a></li>
+
+
+		</a></li>
           </ul>
         </li>
       </ul>
-      
+  
       <ul class="nav navbar-nav navbar-right">
         <li><a href="#">Contato</a></li>
       </ul>

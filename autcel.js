@@ -47,8 +47,8 @@ function Canvas(canvasId) {
     canvas.onclick = function(evt) {
         onClick(evt)
     };
-    canvas.width = 500;
-    canvas.height = 280;
+    canvas.width = 400;
+    canvas.height = 200;
     var contexto = canvas.getContext("2d");
     var geracoes = {};
     var geracao = 0;
@@ -176,6 +176,30 @@ function Canvas(canvasId) {
         clearInterval(intervalId);
         this.inicializar(MORTA);
     }
+	
+
+	this.setTamanhoDaCelula = function(tamanho){
+		TAMANHO_DA_CELULA = tamanho;
+		this.inicializar(MORTA);
+	}
+
+	this.setVelocidade = function(espera){
+		ESPERA_ENTRE_GERACOES = espera;
+		this.inicializar(MORTA);
+	}
+
+	this.setTamanhoMatriz = function(altura,largura){
+		canvas.height = altura;
+		canvas.width = largura;
+		this.inicializar(MORTA);
+	}
+
+
+	this.considerarExtremidades = function(estado){
+		CONSIDERAR_EXTREMIDADES = estado;
+		this.inicializar(MORTA);
+		
+	}
 }
 
 canvas = new Canvas("ac:principal")
