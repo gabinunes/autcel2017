@@ -215,9 +215,16 @@ function Canvas(canvasId) {
 
 	}
 	
+	this.limparTabelaDeRegras =function(){
+		$('tbody tr').remove();
+	}	
+	
 	this.excluirRegraManual = function(){
-		//Remove tudo $('tbody tr').remove();
-    	objMarcado.remove();
+    	if(objMarcado!=null){
+			objMarcado.remove(); //dá erro no console qnd não tem nenhuma linha
+		    return true;
+		}
+		//escrever mensagem mandando selecionar alguma regra
 	    return false;
 	}
 }
@@ -226,6 +233,9 @@ $("tbody").on('click', 'tr', function () {
 	objMarcado = this;
     $(this).siblings().removeClass('marcada');	
     $(this).toggleClass('marcada');
+	if(!$(this).hasClass('marcada')) {
+    	objMarcado = null;
+	}
 });
 
 

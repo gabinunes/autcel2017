@@ -149,7 +149,7 @@
 
 		<div class="form-group">
 		  <label for="sel1">Quantidade de Vizinhos:</label>
-		  <select class="selectpicker-sm" id="vizinhos" onchange="myFunction()" name="vizinhos">
+		  <select class="selectpicker-sm" id="vizinhos" name="vizinhos">
 			<option value="1">1</option>
 			<option value="2">2</option>
 			<option value="3">3</option>
@@ -196,7 +196,11 @@
 
 
 	<button id="excluir regra" onclick="canvas.excluirRegraManual()" type="button" class="btn btn-default btn-sm" aria-label="Left Align">
- 		<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+ 		<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Excluir Regra Selecionada
+	</button>
+
+	<button id="excluir regras" onclick="canvas.limparTabelaDeRegras()" type="button" class="btn btn-default btn-sm" aria-label="Left Align">
+ 		<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Excluir Todas as Regras
 	</button>
 
 	<button id="restaurar regra" onclick="" type="button" class="btn btn-default btn-sm" aria-label="Left Align">
@@ -205,7 +209,7 @@
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-default" onclick ="canvas.limparTabelaDeRegras()" data-dismiss="modal">Cancelar</button>
         <button type="button" class="btn btn-primary">Salvar</button>
       </div>
     </div><!-- /.modal-content -->
