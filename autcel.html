@@ -60,9 +60,9 @@
         </li>
       </ul>
   
-      <ul class="nav navbar-nav navbar-right">
+<!--      <ul class="nav navbar-nav navbar-right">
         <li><a href="#">Contato</a></li>
-      </ul>
+      </ul>-->
     </div>
   </div>
 </nav>
@@ -134,54 +134,54 @@
         
 		<div class="form-group">
 			<label for="sel1">Estado Inicial da Célula:</label>
-			<form role="form">
+			<form role="form"  id="estadoinicial">
 			<label class="radio-inline">
-			  <input type="radio" name="optradio">Viva
+			  <input type="radio" name="estadoinicial" value="Viva" >Viva
 			</label>
 			<label class="radio-inline">
-			  <input type="radio" name="optradio">Morta
+			  <input type="radio" name="estadoinicial" value="Morta">Morta
 			</label>
 			<label class="radio-inline">
-			  <input type="radio" name="optradio">Independe
+			  <input type="radio" name="estadoinicial" value="Indiferente">Independe
 			</label>
 		  </form>
 		</div>
 
 		<div class="form-group">
 		  <label for="sel1">Quantidade de Vizinhos:</label>
-		  <select class="selectpicker-sm" id="sel1">
-			<option>1</option>
-			<option>2</option>
-			<option>3</option>
-			<option>4</option>
-			<option>5</option>
-			<option>6</option>
-			<option>7</option>
-			<option>8</option>
+		  <select class="selectpicker-sm" id="vizinhos" onchange="myFunction()" name="vizinhos">
+			<option value="1">1</option>
+			<option value="2">2</option>
+			<option value="3">3</option>
+			<option value="4">4</option>
+			<option value="5">5</option>
+			<option value="6">6</option>
+			<option value="7">7</option>
+			<option value="8">8</option>
 		  </select>
 		</div>
 
 
 		<div class="form-group">
 			<label for="sel1">Estado Final da Célula:</label>
-			<form role="form">
+			<form role="form" id="estadofinal">
 			<label class="radio-inline">
-			  <input type="radio" name="optradio">Viva
+			  <input type="radio" name="estadofinal" value="Viva">Viva
 			</label>
 			<label class="radio-inline">
-			  <input type="radio" name="optradio">Morta
+			  <input type="radio" name="estadofinal" value="Morta">Morta
 			</label>
 		  </form>
 		</div>
 
-	<button id="adicionar regra" onclick="" type="button" class="btn btn-default btn-sm" aria-label="Left Align">
+	<button id="adicionar regra" onclick="canvas.criarRegraManual()" type="button" class="btn btn-default btn-sm" aria-label="Left Align">
  		<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
 	</button>
 
 
 <br><br>
         
-  <table class="table table-responsive">
+  <table class="table table-responsive" id="mytable">
     <thead>
       <tr>
         <th>Estado Inicial</th>
@@ -190,22 +190,12 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
 
-      <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
     </tbody>
   </table>
 
 
-	<button id="excluir regra" onclick="" type="button" class="btn btn-default btn-sm" aria-label="Left Align">
+	<button id="excluir regra" onclick="canvas.excluirRegraManual()" type="button" class="btn btn-default btn-sm" aria-label="Left Align">
  		<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 	</button>
 
@@ -229,10 +219,7 @@
 
 	<a href="http://www.facebook.com/gabiinuness"target="blank"> <i class="fa fa-facebook-square  fa-2x" aria-hidden="true" ></i> </a>
 	<a href="http://www.instagram.com/ow_bibi"target="blank"><i class="fa fa-instagram fa-2x" aria-hidden="true" ></i> </a>
-	<a href=""><i class="fa fa-github fa-2x" aria-hidden="true" ></i> </a>
-
-
-
+	<a href="https://github.com/gabinunes/autcel2017"target="blank"><i class="fa fa-github fa-2x" aria-hidden="true" ></i> </a>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
 

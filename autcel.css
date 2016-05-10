@@ -1,7 +1,12 @@
 @CHARSET "UTF-8";
 
 
-.fa{
+.marcada {
+    background-color: gray;
+    color: white;
+}
+
+.fa {
 color: black;
 }
 

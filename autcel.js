@@ -200,10 +200,39 @@ function Canvas(canvasId) {
 		this.inicializar(MORTA);
 		
 	}
+
+	this.criarRegraManual = function(){
+		var quantRegras = 0;
+		$estadoInicial = $('input[name="estadoinicial"]:checked').val();
+		$quantidadeVizinhos = $('#vizinhos option:selected').val();
+		$estadoFinal = $('input[name="estadofinal"]:checked').val();
+		
+		//verificar se já existe pra poder adicionar
+
+		$("tbody").add("<tr><td><p>"+$estadoInicial+"</p></td><td><p>"+$quantidadeVizinhos+"</p></td><td><p>"+$estadoFinal+"</p></td></tr>").appendTo("tbody");
+
+		quantRegras++;
+
+	}
+	
+	this.excluirRegraManual = function(){
+		//Remove tudo $('tbody tr').remove();
+    	objMarcado.remove();
+	    return false;
+	}
 }
+
+$("tbody").on('click', 'tr', function () {
+	objMarcado = this;
+    $(this).siblings().removeClass('marcada');	
+    $(this).toggleClass('marcada');
+});
+
+
 
 canvas = new Canvas("ac:principal")
 canvas.inicializar(MORTA);
+
 
 
 
