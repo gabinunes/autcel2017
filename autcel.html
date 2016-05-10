@@ -136,13 +136,10 @@
 			<label for="sel1">Estado Inicial da Célula:</label>
 			<form role="form"  id="estadoinicial">
 			<label class="radio-inline">
-			  <input type="radio" name="estadoinicial" value="Viva" >Viva
+			  <input type="radio" name="estadoinicial" value="Viva" checked>Viva
 			</label>
 			<label class="radio-inline">
 			  <input type="radio" name="estadoinicial" value="Morta">Morta
-			</label>
-			<label class="radio-inline">
-			  <input type="radio" name="estadoinicial" value="Indiferente">Independe
 			</label>
 		  </form>
 		</div>
@@ -150,6 +147,7 @@
 		<div class="form-group">
 		  <label for="sel1">Quantidade de Vizinhos:</label>
 		  <select class="selectpicker-sm" id="vizinhos" name="vizinhos">
+			<option value="0">0</option>
 			<option value="1">1</option>
 			<option value="2">2</option>
 			<option value="3">3</option>
@@ -166,7 +164,7 @@
 			<label for="sel1">Estado Final da Célula:</label>
 			<form role="form" id="estadofinal">
 			<label class="radio-inline">
-			  <input type="radio" name="estadofinal" value="Viva">Viva
+			  <input type="radio" name="estadofinal" value="Viva" checked>Viva
 			</label>
 			<label class="radio-inline">
 			  <input type="radio" name="estadofinal" value="Morta">Morta
@@ -174,7 +172,7 @@
 		  </form>
 		</div>
 
-	<button id="adicionar regra" onclick="canvas.criarRegraManual()" type="button" class="btn btn-default btn-sm" aria-label="Left Align">
+	<button id="adicionar regra" onclick="tabela.criarRegraManual()" type="button" class="btn btn-default btn-sm" aria-label="Left Align">
  		<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
 	</button>
 
@@ -195,11 +193,11 @@
   </table>
 
 
-	<button id="excluir regra" onclick="canvas.excluirRegraManual()" type="button" class="btn btn-default btn-sm" aria-label="Left Align">
+	<button id="excluir regra" onclick="tabela.excluirRegraManual()" type="button" class="btn btn-default btn-sm" aria-label="Left Align">
  		<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Excluir Regra Selecionada
 	</button>
 
-	<button id="excluir regras" onclick="canvas.limparTabelaDeRegras()" type="button" class="btn btn-default btn-sm" aria-label="Left Align">
+	<button id="excluir regras" onclick="tabela.limparTabelaDeRegras()" type="button" class="btn btn-default btn-sm" aria-label="Left Align">
  		<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Excluir Todas as Regras
 	</button>
 
@@ -209,12 +207,12 @@
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" onclick ="canvas.limparTabelaDeRegras()" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-default" onclick ="tabela.limparTabelaDeRegras()" data-dismiss="modal">Cancelar</button>
         <button type="button" class="btn btn-primary">Salvar</button>
       </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+    </div>
+  </div>
+</div>
 
 
 

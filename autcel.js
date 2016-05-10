@@ -1,4 +1,3 @@
-
 // CONSTANTES
 MORTA = 0
 VIVA = 1
@@ -201,27 +200,52 @@ function Canvas(canvasId) {
 		
 	}
 
+}
+
+
+function Tabela(){
+
+	//var quantidadeDeRegras = 0;
+	var objMarcado = null;
+
+	$("tbody").on('click', 'tr', function () {
+		objMarcado = this;
+		$(this).siblings().removeClass('marcada');	
+		$(this).toggleClass('marcada');
+		if(!$(this).hasClass('marcada')) {
+			objMarcado = null;
+		}
+	});
+
+
+
 	this.criarRegraManual = function(){
-		var quantRegras = 0;
 		$estadoInicial = $('input[name="estadoinicial"]:checked').val();
 		$quantidadeVizinhos = $('#vizinhos option:selected').val();
 		$estadoFinal = $('input[name="estadofinal"]:checked').val();
-		
-		//verificar se já existe pra poder adicionar
 
-		$("tbody").add("<tr><td><p>"+$estadoInicial+"</p></td><td><p>"+$quantidadeVizinhos+"</p></td><td><p>"+$estadoFinal+"</p></td></tr>").appendTo("tbody");
 
-		quantRegras++;
+		if (document.getElementById($estadoInicial+":"+$quantidadeVizinhos) != null){
+			//verificar estado final, se igual, regra já existente, senão, regra conflitante
+			return false;
+		}
 
+		$("tbody").add("<tr id="+$estadoInicial+":"+$quantidadeVizinhos+"><td>"+$estadoInicial+"</td><td>"
+		+$quantidadeVizinhos+"</td><td>"+$estadoFinal+"</td></tr>").appendTo("tbody");
+
+		//quantidadeDeRegras++;
+		return true;
 	}
 	
 	this.limparTabelaDeRegras =function(){
 		$('tbody tr').remove();
+		//quantidadeDeRegras=0;
 	}	
 	
 	this.excluirRegraManual = function(){
     	if(objMarcado!=null){
-			objMarcado.remove(); //dá erro no console qnd não tem nenhuma linha
+			objMarcado.remove();
+			//quantidadeDeRegras--;
 		    return true;
 		}
 		//escrever mensagem mandando selecionar alguma regra
@@ -229,18 +253,10 @@ function Canvas(canvasId) {
 	}
 }
 
-$("tbody").on('click', 'tr', function () {
-	objMarcado = this;
-    $(this).siblings().removeClass('marcada');	
-    $(this).toggleClass('marcada');
-	if(!$(this).hasClass('marcada')) {
-    	objMarcado = null;
-	}
-});
-
 
 
 canvas = new Canvas("ac:principal")
+tabela = new Tabela()
 canvas.inicializar(MORTA);
 
 
