@@ -11,6 +11,29 @@ ESPERA_ENTRE_GERACOES = 100;
 CONSIDERAR_EXTREMIDADES = true;
 
 
+//ObjetoRegras
+
+
+var regrasPadrao = {
+	  viva:{0:"Morta", 1:"Morta", 4:"Morta", 5:"Morta", 6:"Morta", 7:"Morta", 8:"Morta"},
+	  morta:{3:"Viva"}
+};
+
+var regras = {
+		viva: {0:"Morta", 1:"Morta", 4:"Morta", 5:"Morta", 6:"Morta", 7:"Morta", 8:"Morta"},
+		morta: {3:"Viva"},
+		limparRegras: function(){ 
+			this.morta = {}
+			this.viva = {}
+		},		
+
+		remove : function(estadoIncial, vizinhos) {
+     		delete  this[estadoIncial.toLowerCase()][vizinhos];
+		}
+		
+};
+
+
 function Celula(x, y, estado) {
     var posicaoX = x;
     var posicaoY = y; 
@@ -119,7 +142,7 @@ function Canvas(canvasId) {
 	}
 
 
-    var processarRegras = function(celula) {
+  /*  var processarRegras = function(celula) {
         //TODO Inserir Regras 
         vizinhas = getQuantidadeDeVizinhas(celula);
         if (celula.isViva() && (vizinhas < 2 || vizinhas > 3)) {
@@ -127,6 +150,20 @@ function Canvas(canvasId) {
         }
         if (!celula.isViva() && vizinhas === 3) {
             return new Celula(celula.getPosicaoX(), celula.getPosicaoY(), VIVA);
+        }
+        return celula;
+    }*/
+
+	var processarRegras = function(celula) {
+
+        vizinhas = getQuantidadeDeVizinhas(celula);  //procurar se tem regra com esse nr, se n tiver return celula
+
+        if (celula.isViva() && regras.viva[vizinhas]!=undefined) {
+            return new Celula(celula.getPosicaoX(), celula.getPosicaoY(), eval(regras.viva[vizinhas].toUpperCase()));
+        }
+
+        if (!celula.isViva && regras.morta[vizinhas]!=undefined) {
+            return new Celula(celula.getPosicaoX(), celula.getPosicaoY(), eval(regras.morta[vizinhas].toUpperCase()));
         }
         return celula;
     }
@@ -207,9 +244,10 @@ function Tabela(){
 
 	//var quantidadeDeRegras = 0;
 	var objMarcado = null;
+	
 
 	$("tbody").on('click', 'tr', function () {
-		objMarcado = this;
+		objMarcado = $(this);
 		$(this).siblings().removeClass('marcada');	
 		$(this).toggleClass('marcada');
 		if(!$(this).hasClass('marcada')) {
@@ -224,26 +262,53 @@ function Tabela(){
 		$quantidadeVizinhos = $('#vizinhos option:selected').val();
 		$estadoFinal = $('input[name="estadofinal"]:checked').val();
 
+		$tr = $("#"+$estadoInicial+"_"+$quantidadeVizinhos);
+		if ($tr.length > 0){
 
-		if (document.getElementById($estadoInicial+":"+$quantidadeVizinhos) != null){
-			//verificar estado final, se igual, regra já existente, senão, regra conflitante
+			if($tr.children(":last").html() == $estadoFinal){
+				$.notify(
+					{ message: 'Regra já inserida anteriormente' },
+					{	type: 'danger', z_index: 1111, placement:{from: "top", align: "center"},}
+				);
+				
+				return false;
+			}
+			$.notify(
+					{ message: 'Regra Conflitante' },
+					{	type: 'danger', z_index: 1111, placement:{from: "top", align: "center"},}
+				);
 			return false;
 		}
 
-		$("tbody").add("<tr id="+$estadoInicial+":"+$quantidadeVizinhos+"><td>"+$estadoInicial+"</td><td>"
+		$("tbody").add("<tr id="+$estadoInicial+"_"+$quantidadeVizinhos+"><td>"+$estadoInicial+"</td><td>"
 		+$quantidadeVizinhos+"</td><td>"+$estadoFinal+"</td></tr>").appendTo("tbody");
+
+		if($estadoInicial == "Morta"){
+			regras.morta[$quantidadeVizinhos] = $estadoFinal;
+			console.log(regras);
+			console.log(regras.morta);
+		}else{
+			regras.viva[$quantidadeVizinhos] = $estadoFinal;		
+			console.log(regras);
+			console.log(regras.viva);
+		}
 
 		//quantidadeDeRegras++;
 		return true;
 	}
 	
-	this.limparTabelaDeRegras =function(){
+	this.limparTabelaDeRegras = function(){
 		$('tbody tr').remove();
 		//quantidadeDeRegras=0;
+		regras.limparRegras();
 	}	
 	
 	this.excluirRegraManual = function(){
     	if(objMarcado!=null){
+			id = objMarcado.attr("id").split("_");
+			estadoIncial = id[0];
+			vizinhos = id[1];
+			regras.remove(estadoIncial, vizinhos)
 			objMarcado.remove();
 			//quantidadeDeRegras--;
 		    return true;
@@ -251,6 +316,7 @@ function Tabela(){
 		//escrever mensagem mandando selecionar alguma regra
 	    return false;
 	}
+
 }
 
 
@@ -258,7 +324,6 @@ function Tabela(){
 canvas = new Canvas("ac:principal")
 tabela = new Tabela()
 canvas.inicializar(MORTA);
-
 
 
 
