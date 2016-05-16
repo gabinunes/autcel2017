@@ -11,13 +11,13 @@ ESPERA_ENTRE_GERACOES = 100;
 CONSIDERAR_EXTREMIDADES = true;
 
 
+
+function capitalize(string) {
+    return string[0].toUpperCase() + string.slice(1);
+}
+
+
 //ObjetoRegras
-
-
-var regrasPadrao = {
-	  viva:{0:"Morta", 1:"Morta", 4:"Morta", 5:"Morta", 6:"Morta", 7:"Morta", 8:"Morta"},
-	  morta:{3:"Viva"}
-};
 
 var regras = {
 		viva: {0:"Morta", 1:"Morta", 4:"Morta", 5:"Morta", 6:"Morta", 7:"Morta", 8:"Morta"},
@@ -28,10 +28,15 @@ var regras = {
 		},		
 
 		remove : function(estadoIncial, vizinhos) {
-     		delete  this[estadoIncial.toLowerCase()][vizinhos];
-		}
+	     		delete  this[estadoIncial.toLowerCase()][vizinhos];
+		},
 		
+		restaurarPadrao : function() {
+			this.viva = {0:"Morta", 1:"Morta", 4:"Morta", 5:"Morta", 6:"Morta", 7:"Morta", 8:"Morta"};
+			this.morta = {3:"Viva"};
+		}
 };
+
 
 
 function Celula(x, y, estado) {
@@ -162,7 +167,7 @@ function Canvas(canvasId) {
             return new Celula(celula.getPosicaoX(), celula.getPosicaoY(), eval(regras.viva[vizinhas].toUpperCase()));
         }
 
-        if (!celula.isViva && regras.morta[vizinhas]!=undefined) {
+        if (!celula.isViva() && regras.morta[vizinhas]!=undefined) {
             return new Celula(celula.getPosicaoX(), celula.getPosicaoY(), eval(regras.morta[vizinhas].toUpperCase()));
         }
         return celula;
@@ -239,12 +244,17 @@ function Canvas(canvasId) {
 
 }
 
+var notificar = function(mensagem, tipo) {
+	$.notify(
+		{ message: mensagem },
+		{type: tipo, z_index: 1111, placement:{from: "top", align: "center"},}
+	);
+}
+
 
 function Tabela(){
 
-	//var quantidadeDeRegras = 0;
 	var objMarcado = null;
-	
 
 	$("tbody").on('click', 'tr', function () {
 		objMarcado = $(this);
@@ -255,7 +265,29 @@ function Tabela(){
 		}
 	});
 
+	
+	this.inicializarTabela = function() {
+		for (var estado in regras) {
+			// se for atributo de superclass não verifica
+			if (!regras.hasOwnProperty(estado)) continue;
 
+			var regra = regras[estado];
+    			for (var vizinhos in regra) {
+				// se for atributo de superclass não verifica
+			        if(!regra.hasOwnProperty(vizinhos)) continue;
+				adicionarRegraNaTabela(capitalize(estado), vizinhos, regra[vizinhos]);
+ 			}
+		}
+	}
+
+	var adicionarRegraNaTabela = function(estadoInicial, quantidadeDeVizinhos, estadoFinal) {
+		$("tbody").add("<tr id="+estadoInicial+"_"+quantidadeDeVizinhos+"><td>"+estadoInicial+"</td><td>"
+		+quantidadeDeVizinhos+"</td><td>"+estadoFinal+"</td></tr>").appendTo("tbody");
+	}
+
+	var adicionarRegra = function(estadoInicial, quantidadeDeVizinhos, estadoFinal) {
+		regras[estadoIncial.toLowerCase()][quantidadeDeVizinhos] = estadoFinal;
+	}
 
 	this.criarRegraManual = function(){
 		$estadoInicial = $('input[name="estadoinicial"]:checked').val();
@@ -264,36 +296,19 @@ function Tabela(){
 
 		$tr = $("#"+$estadoInicial+"_"+$quantidadeVizinhos);
 		if ($tr.length > 0){
-
 			if($tr.children(":last").html() == $estadoFinal){
-				$.notify(
-					{ message: 'Regra já inserida anteriormente' },
-					{	type: 'danger', z_index: 1111, placement:{from: "top", align: "center"},}
-				);
-				
+				notificar('Regra já inserida anteriormente', 'danger');
 				return false;
 			}
-			$.notify(
-					{ message: 'Regra Conflitante' },
-					{	type: 'danger', z_index: 1111, placement:{from: "top", align: "center"},}
-				);
+
+			notificar('Regra Conflitante', 'danger');
 			return false;
 		}
 
-		$("tbody").add("<tr id="+$estadoInicial+"_"+$quantidadeVizinhos+"><td>"+$estadoInicial+"</td><td>"
-		+$quantidadeVizinhos+"</td><td>"+$estadoFinal+"</td></tr>").appendTo("tbody");
+		adicionarRegraNaTabela($estadoInicial, $quantidadeVizinhos, $estadoFinal);
 
-		if($estadoInicial == "Morta"){
-			regras.morta[$quantidadeVizinhos] = $estadoFinal;
-			console.log(regras);
-			console.log(regras.morta);
-		}else{
-			regras.viva[$quantidadeVizinhos] = $estadoFinal;		
-			console.log(regras);
-			console.log(regras.viva);
-		}
+		adicionarRegra($estadoInicial, $quantidadeVizinhos, $estadoFinal);
 
-		//quantidadeDeRegras++;
 		return true;
 	}
 	
@@ -323,6 +338,7 @@ function Tabela(){
 
 canvas = new Canvas("ac:principal")
 tabela = new Tabela()
+tabela.inicializarTabela();
 canvas.inicializar(MORTA);
 
 
