@@ -27,15 +27,33 @@ var regras = {
 			this.viva = {}
 		},		
 
-		remove : function(estadoIncial, vizinhos) {
+		remove: function(estadoIncial, vizinhos) {
 	     		delete  this[estadoIncial.toLowerCase()][vizinhos];
 		},
 		
-		restaurarPadrao : function() {
+		restaurarPadrao: function() {
 			this.viva = {0:"Morta", 1:"Morta", 4:"Morta", 5:"Morta", 6:"Morta", 7:"Morta", 8:"Morta"};
 			this.morta = {3:"Viva"};
+		},
+
+		downloadRegras: function(text, name, type){
+			var a = document.createElement("a");
+			$("body").append(a);
+			var file = new Blob([text],{type:type});
+			a.href = URL.createObjectURL(file);
+			a.type = type;
+			a.download = name;
+			a.click();
+			$("body").remove(a);
+		},
+
+		uploadRegras: function(){
+				
+
 		}
+
 };
+
 
 
 
@@ -330,6 +348,12 @@ function Tabela(){
 		}
 		//escrever mensagem mandando selecionar alguma regra
 	    return false;
+	}
+
+	this.restaurarRegrasPadrao = function(){
+		regras.restaurarPadrao();
+		tabela.inicializarTabela();
+	
 	}
 
 }
