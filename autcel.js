@@ -354,7 +354,7 @@ function Tabela(){
 	}
 
 	var adicionarRegra = function(estadoInicial, quantidadeDeVizinhos, estadoFinal) {
-		regras[estadoIncial.toLowerCase()][quantidadeDeVizinhos] = estadoFinal;
+		regras[estadoInicial.toLowerCase()][quantidadeDeVizinhos] = estadoFinal;
 	}
 
 	this.criarRegraManual = function(){
