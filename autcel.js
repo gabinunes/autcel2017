@@ -33,8 +33,8 @@ var regras = {
 			this.viva = {}
 		},		
 
-		remove: function(estadoIncial, vizinhos) {
-	     		delete  this[estadoIncial.toLowerCase()][vizinhos];
+		remove: function(estadoInicial, vizinhos) {
+	     		delete  this[estadoInicial.toLowerCase()][vizinhos];
 		},
 		
 		restaurarPadrao: function() {
@@ -389,9 +389,9 @@ function Tabela(){
 	this.excluirRegraManual = function(){
     	if(objMarcado!=null){
 			id = objMarcado.attr("id").split("_");
-			estadoIncial = id[0];
+			estadoInicial = id[0];
 			vizinhos = id[1];
-			regras.remove(estadoIncial, vizinhos)
+			regras.remove(estadoInicial, vizinhos)
 			objMarcado.remove();
 			//quantidadeDeRegras--;
 		    return true;
