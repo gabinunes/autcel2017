@@ -16,6 +16,12 @@ function capitalize(string) {
     return string[0].toUpperCase() + string.slice(1);
 }
 
+var notificar = function(mensagem, tipo) {
+	$.notify(
+		{ message: mensagem },
+		{type: tipo, z_index: 1111, placement:{from: "top", align: "center"},}
+	);
+}
 
 //ObjetoRegras
 
@@ -36,22 +42,74 @@ var regras = {
 			this.morta = {3:"Viva"};
 		},
 
-		downloadRegras: function(text, name, type){
+		downloadRegras: function(){
 			var a = document.createElement("a");
 			$("body").append(a);
-			var file = new Blob([text],{type:type});
-			a.href = URL.createObjectURL(file);
-			a.type = type;
-			a.download = name;
+			var arquivo = new Blob([JSON.stringify(regras)],{type:'application/json'});
+			a.href = URL.createObjectURL(arquivo);
+			a.type = 'application/json';
+			a.download = 'regras.json';
 			a.click();
-			$("body").remove(a);
+			$(a).remove();
+		},
+
+
+		parseRegra : function(regra) {
+			result = {};
+			for(var vizinho in regra) {
+				qnt_vizinho = parseInt(vizinho);
+				if(isNaN(qnt_vizinho) || qnt_vizinho < 0 || qnt_vizinho > 8 || !regra.hasOwnProperty(vizinho))
+					 continue;
+						
+				var estadoFinal = regra[vizinho].toLowerCase();
+				if( estadoFinal === "morta" || estadoFinal === "viva" ) {
+					result[vizinho] = estadoFinal;					
+				}
+			}
+			return result;
+		},
+
+		carregarRegras : function(reader) {
+			try{
+				var regra = JSON.parse(reader.result);
+				tabela.limparTabelaDeRegras();
+				if(regra.hasOwnProperty("viva")) {
+					this.viva = this.parseRegra(regra["viva"]);
+				}
+				if(regra.hasOwnProperty("morta")) {
+					this.morta = this.parseRegra(regra["morta"]);
+				}
+				tabela.inicializarTabela();
+			} catch(error) {
+				notificar("Verifique o conteúdo do arquivo!", "danger");
+			}
 		},
 
 		uploadRegras: function(){
-				
+			var input = document.createElement("input");
+			$("body").append(input);
+			
+			input.type = "file";
+			input.style = "display: none";
+			var self = this;
+			input.addEventListener('change', function(e) {
+				var arquivo = input.files[0];
 
+				if (arquivo.type.match("application/json")) {
+					var reader = new FileReader();
+
+				reader.onload = function(e) {
+					self.carregarRegras(reader);
+				}
+
+				reader.readAsText(arquivo);	
+			} else {
+				notificar("Tipo de arquivo inválido! permitido apenas arquivos 'application/json'", 'danger');
+			}
+			});
+			input.click();
+			$(input).remove();
 		}
-
 };
 
 
@@ -262,14 +320,6 @@ function Canvas(canvasId) {
 
 }
 
-var notificar = function(mensagem, tipo) {
-	$.notify(
-		{ message: mensagem },
-		{type: tipo, z_index: 1111, placement:{from: "top", align: "center"},}
-	);
-}
-
-
 function Tabela(){
 
 	var objMarcado = null;
@@ -351,6 +401,7 @@ function Tabela(){
 	}
 
 	this.restaurarRegrasPadrao = function(){
+		tabela.limparTabelaDeRegras();
 		regras.restaurarPadrao();
 		tabela.inicializarTabela();
 	

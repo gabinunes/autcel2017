@@ -100,11 +100,11 @@
  		<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
 	</button>
 
-	<button id="salvar regra" onclick="regras.downloadRegras(JSON.stringify(regras), 'regras.json','application/json');" type="button" class="btn btn-default btn-sm" aria-label="Left Align">
+	<button id="salvar regra" onclick="regras.downloadRegras();" type="button" class="btn btn-default btn-sm" aria-label="Left Align">
  		<span class="glyphicon glyphicon-floppy-open" aria-hidden="true"></span>
 	</button>
 
-	<button id="carregar estado" onclick="" type="button" class="btn btn-default btn-sm" aria-label="Left Align">
+	<button id="carregar estado" onclick="regras.uploadRegras();" type="button" class="btn btn-default btn-sm" aria-label="Left Align">
  		<span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
 	</button>
 
@@ -205,10 +205,6 @@
  		<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> Restaurar Regras Padrão
 	</button>
 
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-primary" data-dismiss="modal">Salvar</button>
       </div>
     </div>
   </div>
