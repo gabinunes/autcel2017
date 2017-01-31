@@ -211,9 +211,19 @@ function Canvas(canvasId) {
                 desenharCelula(celula);
             }
         }
-        //TODO salvar geraÃ§Ã£o atual
+       
         document.getElementById("geracao").innerHTML = ++geracao;
-        celulas = novaGeracao
+
+		for (var posicaoX = 0; posicaoX < largura; posicaoX++) {
+            for (var posicaoY = 0; posicaoY < altura; posicaoY++) {
+                if (novaGeracao[posicaoX][posicaoY] != celulas[posicaoX][posicaoY]){
+					celulas = novaGeracao;
+					return;
+				}
+                
+            }
+		}
+        this.pararSimulacao();
 
     }
 
@@ -296,16 +306,19 @@ function Canvas(canvasId) {
 	
 
 	this.setTamanhoDaCelula = function(tamanho){
+		geracao = 0;
 		TAMANHO_DA_CELULA = tamanho;
 		this.inicializar(MORTA);
 	}
 
 	this.setVelocidade = function(espera){
+		geracao = 0;
 		ESPERA_ENTRE_GERACOES = espera;
 		this.inicializar(MORTA);
 	}
 
 	this.setTamanhoMatriz = function(altura,largura){
+		geracao = 0;
 		canvas.height = altura;
 		canvas.width = largura;
 		this.inicializar(MORTA);
@@ -313,6 +326,7 @@ function Canvas(canvasId) {
 
 
 	this.considerarExtremidades = function(estado){
+		geracao = 0;
 		CONSIDERAR_EXTREMIDADES = estado;
 		this.inicializar(MORTA);
 		
