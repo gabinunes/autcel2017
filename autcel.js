@@ -194,8 +194,11 @@ function Canvas(canvasId) {
         }
     }
 
-    var onClick = function(evt) {
-        celula = celulas[Math.floor(evt.layerX / TAMANHO_DA_CELULA)][Math.floor(evt.layerY / TAMANHO_DA_CELULA)];
+var onClick = function(evt) {
+	var x = evt.clientX + document.body.scrollLeft + document.documentElement.scrollLeft - Math.floor(canvas.offsetLeft);
+	var y = evt.clientY + document.body.scrollTop + document.documentElement.scrollTop - Math.floor(canvas.offsetTop);
+
+        celula = celulas[Math.floor(x / TAMANHO_DA_CELULA)][Math.floor(y / TAMANHO_DA_CELULA)];
         celula.mudarEstado();
         desenharCelula(celula);
     }
@@ -307,18 +310,22 @@ function Canvas(canvasId) {
 
 	this.setTamanhoDaCelula = function(tamanho){
 		geracao = 0;
+        clearInterval(intervalId);
 		TAMANHO_DA_CELULA = tamanho;
 		this.inicializar(MORTA);
+		
 	}
 
 	this.setVelocidade = function(espera){
 		geracao = 0;
+        clearInterval(intervalId);
 		ESPERA_ENTRE_GERACOES = espera;
 		this.inicializar(MORTA);
 	}
 
 	this.setTamanhoMatriz = function(altura,largura){
 		geracao = 0;
+        clearInterval(intervalId);		
 		canvas.height = altura;
 		canvas.width = largura;
 		this.inicializar(MORTA);
@@ -327,6 +334,7 @@ function Canvas(canvasId) {
 
 	this.considerarExtremidades = function(estado){
 		geracao = 0;
+        clearInterval(intervalId);
 		CONSIDERAR_EXTREMIDADES = estado;
 		this.inicializar(MORTA);
 		
